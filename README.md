@@ -1,108 +1,152 @@
-<h1 align="center">AiDex-Antdv</h1>
+<div align="center"> <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="215" src="https://unpkg.com/@vbenjs/static-source@0.1.7/source/logo-v1.webp"> </a> <br> <br>
 
-> AiDex-Antdv 是AiDex-Vue和Ant Design Vue Pro的结合。
+[![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
+
+<h1>Vue Vben Admin</h1>
+</div>
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vbenjs_vue-vben-admin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vbenjs_vue-vben-admin) ![codeql](https://github.com/vbenjs/vue-vben-admin/actions/workflows/codeql.yml/badge.svg) ![build](https://github.com/vbenjs/vue-vben-admin/actions/workflows/build.yml/badge.svg) ![ci](https://github.com/vbenjs/vue-vben-admin/actions/workflows/ci.yml/badge.svg) ![deploy](https://github.com/vbenjs/vue-vben-admin/actions/workflows/deploy.yml/badge.svg)
+
+**English** | [中文](./README.zh-CN.md) | [日本語](./README.ja-JP.md)
+
+## Introduction
+
+Vue Vben Admin is a free and open source middle and back-end template. Using the latest `vue3`, `vite`, `TypeScript` and other mainstream technology development, the out-of-the-box middle and back-end front-end solutions can also be used for learning reference.
+
+## Upgrade Notice
+
+This is the latest version, 5.0, and it is not compatible with previous versions. If you are starting a new project, it is recommended to use the latest version. If you wish to view the old version, please use the [v2 branch](https://github.com/vbenjs/vue-vben-admin/tree/v2).
+
+## Feature
+
+- **Latest Technology Stack**: Developed with cutting-edge front-end technologies like Vue 3 and Vite
+- **TypeScript**: A language for application-scale JavaScript
+- **Themes**: Multiple theme colors available with customizable options
+- **Internationalization**: Comprehensive built-in internationalization support
+- **Permissions**: Built-in solution for dynamic route-based permission generation
+
+## Preview
+
+- [Vben Admin](https://vben.pro/) - Full version Chinese site
+
+Test Account: vben/123456
 
 <p align="center">
-<p align="center">
- <a href="https://gitee.com/fuzui/AiDex-Antdv" target="_blank"><img src="https://gitee.com/fuzui/AiDex-Antdv/badge/star.svg?theme=dark" alt="Build Status"></a>
- <a href="https://github.com/fuzui/AiDex-Antdv" target="_blank"><img src="https://img.shields.io/github/stars/fuzui/AiDex-Antdv.svg?style=social" alt="Build Status"></a>
- <a href="https://gitee.com/y_project/AiDex-Vue" target="_blank"><img src="https://img.shields.io/badge/AiDex Vue-3.3.0-brightgreen" alt="Build Status"></a>
- <a href="https://github.com/vueComponent/ant-design-vue" target="_blank"><img src="https://img.shields.io/badge/Ant Design Vue-1.7.2-brightgreen" alt="Build Status"></a>
- <a href="https://github.com/vueComponent/ant-design-vue-pro" target="_blank"><img src="https://img.shields.io/badge/Ant Design Vue Pro-3.0.0-brightgreen" alt="Build Status"></a>
+    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview1.png">
+    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
+    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
 </p>
 
-------------------------------
+### Use Gitpod
 
-## 简介
+Open the project in Gitpod (free online dev environment for GitHub) and start coding immediately.
 
-**AiDex-Antdv**，使用[AiDex-Vue](https://gitee.com/y_project/AiDex-Vue)作为后端，改其原有Element Ui为Ant Design Vue。将会持续完全适配AiDex-Vue。
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/vbenjs/vue-vben-admin)
 
-> AiDex-Vue是基于SpringBoot，Spring Security，JWT，Vue 的前后端分离权限管理系统。
->
-> 拥有用户管理、部门管理、岗位管理、菜单管理、角色管理、字典管理、参数管理、通知公告、操作日志、登录日志、在线用户、定时任务、代码生成、系统接口、服务监控、在线构建器、连接池监视等功能。
+## Documentation
 
-*当前暂不支持AiDex中的在线构建器与前端代码生成功能。*
+[Document](https://doc.vben.pro/)
 
-* 预览：[https://aidex.setworld.net/](https://aidex.setworld.net/)
+## Install and use
 
-* 文档: [https://docs.geekera.cn/AiDex-Antdv/](https://docs.geekera.cn/AiDex-Antdv/)
+- Get the project code
 
-* AiDex-Vue文档: [https://doc.aidex.vip/aidex-vue/](https://doc.aidex.vip/aidex-vue/)
+```bash
+git clone https://github.com/vbenjs/vue-vben-admin.git
+```
 
-* Ant Design Vue文档：[https://www.antdv.com/docs/vue/introduce-cn/](https://www.antdv.com/docs/vue/introduce-cn/)
+- Installation dependencies
 
+```bash
+cd vue-vben-admin
 
+corepack enable
 
-## 开始使用
+pnpm install
+```
 
-1. 环境准备
-   * 运行启动AiDex-Vue，参考[AiDex文档](https://doc.aidex.vip/aidex-vue/)
-   * 安装[node](http://nodejs.org/)和[git](https://git-scm.com/)
+- run
 
-1. 安装
+```bash
+pnpm dev
+```
 
-   ```shell
-   git clone git@gitee.com:fuzui/AiDex-Antdv.git
-   ```
+- build
 
-   或
+```bash
+pnpm build
+```
 
-   ```shell
-   git clone git@github.com:fuzui/AiDex-Antdv.git
-   ```
+## Change Log
 
-2. 本地开发
+[CHANGELOG](https://github.com/vbenjs/vue-vben-admin/releases)
 
-   进入项目根目录
+## How to contribute
 
-   ```shell
-   npm install
-   ```
+You are very welcome to join！[Raise an issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) Or submit a Pull Request。
 
-   > 若耗时太长可使用`npm install --registry=https://registry.npm.taobao.org`
+**Pull Request:**
 
-   ```shell
-   npm run serve
-   ```
+1. Fork code!
+2. Create your own branch: `git checkout -b feat/xxxx`
+3. Submit your changes: `git commit -am 'feat(function): add xxxxx'`
+4. Push your branch: `git push origin feat/xxxx`
+5. submit`pull request`
 
-   > 打开浏览器访问 [http://localhost:8000](http://localhost:8080/)
+## Git Contribution submission specification
 
+- reference [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) specification ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
 
+  - `feat` Add new features
+  - `fix` Fix the problem/BUG
+  - `style` The code style is related and does not affect the running result
+  - `perf` Optimization/performance improvement
+  - `refactor` Refactor
+  - `revert` Undo edit
+  - `test` Test related
+  - `docs` Documentation/notes
+  - `chore` Dependency update/scaffolding configuration modification etc.
+  - `ci` Continuous integration
+  - `types` Type definition file changes
+  - `wip` In development
 
-## 致谢
+## Browser support
 
-* [AiDex-Vue](https://gitee.com/y_project/AiDex-Vue) 基于SpringBoot，Spring Security，JWT，Vue 的前后端分离权限管理系统
-* [Ant Design Vue](https://github.com/vueComponent/ant-design-vue/) An enterprise-class UI components based on Ant Design and Vue.
-* [Ant Design Vue Pro](https://github.com/vueComponent/ant-design-vue-pro) Use Ant Design Vue like a Pro
+The `Chrome 80+` browser is recommended for local development
 
-* [vditor](https://github.com/Vanessa219/vditor) 一款浏览器端的 Markdown 编辑
+Support modern browsers, not IE
 
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
+| :-: | :-: | :-: | :-: | :-: |
+| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
+## Maintainer
 
-## 联系
+[@Vben](https://github.com/anncwb)
 
-如果您发现了什么bug，或者有什么界面建议或意见，
+## Star History
 
-欢迎 [issue](https://github.com/fuzui/AiDex-Antdv/issues)
+[![Star History Chart](https://api.star-history.com/svg?repos=vbenjs/vue-vben-admin&type=Date)](https://star-history.com/#vbenjs/vue-vben-admin&Date)
 
+## Donate
 
+If you think this project is helpful to you, you can help the author buy a cup of coffee to show your support!
 
-## 演示图
+![donate](https://unpkg.com/@vbenjs/static-source@0.1.7/source/sponsor.png)
 
-<table>
-    <tr>
-        <td><img src="https://oss.fuzui.net/img/20210102022024.png"/></td>
-        <td><img src="https://oss.fuzui.net/img/20210102022136.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oss.fuzui.net/img/20210102022247.png"/></td>
-        <td><img src="https://oss.fuzui.net/img/20210102022534.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oss.fuzui.net/img/20210102022749.png"/></td>
-        <td><img src="https://oss.fuzui.net/img/20210102023153.png"/></td>
-    </tr>
-</table>
+<a style="display: block;width: 100px;height: 50px;line-height: 50px; color: #fff;text-align: center; background: #408aee;border-radius: 4px;" href="https://www.paypal.com/paypalme/cvvben">Paypal Me</a>
 
+## Contributor
 
+<a href="https://github.com/vbenjs/vue-vben-admin/graphs/contributors">
+  <img alt="Contributors"
+        src="https://opencollective.com/vbenjs/contributors.svg?button=false" />
+</a>
 
+## Discord
+
+- [Github Discussions](https://github.com/anncwb/vue-vben-admin/discussions)
+
+## License
+
+[MIT © Vben-2020](./LICENSE)
