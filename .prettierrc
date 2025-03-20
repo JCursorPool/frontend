@@ -1,20 +1,6 @@
 {
-  "printWidth": 150,
-  "tabWidth": 2,
-  "useTabs": false,
-  "semi": true,
+  "printWidth": 120,
+  "semi": false,
   "singleQuote": true,
-  "quoteProps": "preserve",
-  "jsxSingleQuote": false,
-  "bracketSameLine": false,
-  "trailingComma": "none",
-  "bracketSpacing": true,
-  "embeddedLanguageFormatting": "auto",
-  "arrowParens": "always",
-  "requirePragma": false,
-  "insertPragma": false,
-  "proseWrap": "preserve",
-  "htmlWhitespaceSensitivity": "css",
-  "vueIndentScriptAndStyle": false,
-  "endOfLine": "auto"
+  "prettier.spaceBeforeFunctionParen": true
 }

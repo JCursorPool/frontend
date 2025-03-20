@@ -1,20 +1,28 @@
 <template>
-  <el-config-provider :locale="appStore.locale" :size="appStore.size">
-    <router-view />
-  </el-config-provider>
+  <a-config-provider :locale="locale">
+    <div id="app">
+      <router-view/>
+    </div>
+  </a-config-provider>
 </template>
 
-<script setup lang="ts">
-import { useSettingsStore } from '@/store/modules/settings';
-import { handleThemeStyle } from '@/utils/theme';
-import { useAppStore } from '@/store/modules/app';
+<script>
+import { domTitle, setDocumentTitle } from '@/utils/domUtil'
+import { i18nRender } from '@/locales'
 
-const appStore = useAppStore();
+export default {
+  data () {
+    return {
+    }
+  },
+  computed: {
+    locale () {
+      // 只是为了切换语言时，更新标题
+      const { title } = this.$route.meta
+      title && (setDocumentTitle(`${i18nRender(title)} - ${domTitle}`))
 
-onMounted(() => {
-  nextTick(() => {
-    // 初始化主题样式
-    handleThemeStyle(useSettingsStore().theme);
-  });
-});
+      return this.$i18n.getLocaleMessage(this.$store.getters.lang).antLocale
+    }
+  }
+}
 </script>

@@ -1,192 +1,299 @@
 <template>
-  <div class="p-2">
-    <el-row :gutter="10">
-      <el-col :span="24" class="card-box">
-        <el-card shadow="hover">
-          <template #header>
-            <Monitor style="width: 1em; height: 1em; vertical-align: middle" />
-            <span style="vertical-align: middle">基本信息</span>
-          </template>
-
-          <div class="el-table el-table--enable-row-hover el-table--medium">
-            <table style="width: 100%">
-              <tbody>
-                <tr>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">Redis版本</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.redis_version }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">运行模式</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.redis_mode === 'standalone' ? '单机' : '集群' }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">端口</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.tcp_port }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">客户端数</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.connected_clients }}</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">运行时间(天)</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.uptime_in_days }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">使用内存</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.used_memory_human }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">使用CPU</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ parseFloat(cache.info.used_cpu_user_children).toFixed(2) }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">内存配置</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.maxmemory_human }}</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">AOF是否开启</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.aof_enabled === '0' ? '否' : '是' }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">RDB是否成功</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">{{ cache.info.rdb_last_bgsave_status }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">Key数量</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.dbSize" class="cell">{{ cache.dbSize }}</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div class="cell">网络入口/出口</div>
-                  </td>
-                  <td class="el-table__cell is-leaf">
-                    <div v-if="cache.info" class="cell">
-                      {{ cache.info.instantaneous_input_kbps }}kps/{{ cache.info.instantaneous_output_kbps }}kps
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </el-card>
-      </el-col>
-
-      <el-col :span="12" class="card-box">
-        <el-card shadow="hover">
-          <template #header>
-            <PieChart style="width: 1em; height: 1em; vertical-align: middle" />
-            <span style="vertical-align: middle">命令统计</span>
-          </template>
-          <div class="el-table el-table--enable-row-hover el-table--medium">
-            <div ref="commandstats" style="height: 420px" />
-          </div>
-        </el-card>
-      </el-col>
-
-      <el-col :span="12" class="card-box">
-        <el-card shadow="hover">
-          <template #header>
-            <Odometer style="width: 1em; height: 1em; vertical-align: middle" /> <span style="vertical-align: middle">内存信息</span>
-          </template>
-          <div class="el-table el-table--enable-row-hover el-table--medium">
-            <div ref="usedmemory" style="height: 420px" />
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
+  <div class="padding-card">
+    <a-spin tip="正在加载缓存监控数据，请稍后！" :spinning="loading">
+      <a-row :gutter="16">
+        <a-col :span="24">
+          <a-card title="基本信息" :bordered="false">
+            <a-descriptions :column="5">
+              <a-descriptions-item label="Redis版本">
+                <span v-if="cache.info">{{ cache.info.redis_version }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="运行模式">
+                <span v-if="cache.info">{{ cache.info.redis_mode == 'standalone' ? '单机' : '集群' }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="端口">
+                <span v-if="cache.info">{{ cache.info.tcp_port }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="客户端数">
+                <span v-if="cache.info">{{ cache.info.connected_clients }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="运行时间(天)">
+                <span v-if="cache.info">{{ cache.info.uptime_in_days }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="使用内存">
+                <span v-if="cache.info">{{ cache.info.used_memory_human }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="使用CPU">
+                <span v-if="cache.info">{{ parseFloat(cache.info.used_cpu_user_children).toFixed(2) }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="内存配置">
+                <span v-if="cache.info">{{ cache.info.maxmemory_human }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="AOF是否开启">
+                <span v-if="cache.info">{{ cache.info.aof_enabled == '0' ? '否' : '是' }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="RDB是否成功">
+                <span v-if="cache.info">{{ cache.info.rdb_last_bgsave_status }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="Key数量">
+                <span v-if="cache.dbSize">{{ cache.dbSize }}</span>
+              </a-descriptions-item>
+              <a-descriptions-item label="系统架构">
+                <span v-if="cache.info">
+                  {{ cache.info.instantaneous_input_kbps }}kps/{{ cache.info.instantaneous_output_kbps }}kps</span>
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-card>
+        </a-col>
+      </a-row>
+      <a-row :gutter="16" style="margin-top: 16px;">
+        <a-col :span="12">
+          <a-card title="命令统计" :bordered="false">
+            <div ref="commandstats" style="height: 380px ;z-index: 2;" />
+          </a-card>
+        </a-col>
+        <a-col :span="12">
+          <a-card title="内存信息" :bordered="false">
+            <div ref="usedmemory" style="height: 380px" />
+          </a-card>
+        </a-col>
+      </a-row>
+    </a-spin>
   </div>
 </template>
 
-<script setup name="Cache" lang="ts">
-import { getCache } from '@/api/monitor/cache';
-import * as echarts from 'echarts';
-import { CacheVO } from '@/api/monitor/cache/types';
+<script>
+  import {
+    getCache
+  } from '@/api/monitor/cache'
+  import * as echarts from 'echarts'
 
-const cache = ref<Partial<CacheVO>>({});
-const commandstats = ref();
-const usedmemory = ref();
-const { proxy } = getCurrentInstance() as ComponentInternalInstance;
-
-const getList = async () => {
-  proxy?.$modal.loading('正在加载缓存监控数据，请稍候！');
-  const res = await getCache();
-  proxy?.$modal.closeLoading();
-  cache.value = res.data;
-  const commandstatsIntance = echarts.init(commandstats.value, 'macarons');
-  commandstatsIntance.setOption({
-    tooltip: {
-      trigger: 'item',
-      formatter: '{a} <br/>{b} : {c} ({d}%)'
-    },
-    series: [
-      {
-        name: '命令',
-        type: 'pie',
-        roseType: 'radius',
-        radius: [15, 95],
-        center: ['50%', '38%'],
-        data: res.data.commandStats,
-        animationEasing: 'cubicInOut',
-        animationDuration: 1000
+  export default {
+    name: 'Cache',
+    data () {
+      return {
+        loading: true,
+        // 统计命令信息
+        commandstats: null,
+        // 使用内存
+        usedmemory: null,
+        // cache信息
+        cache: []
       }
-    ]
-  });
-  const usedmemoryInstance = echarts.init(usedmemory.value, 'macarons');
-  usedmemoryInstance.setOption({
-    tooltip: {
-      formatter: '{b} <br/>{a} : ' + cache.value.info.used_memory_human
     },
-    series: [
-      {
-        name: '峰值',
-        type: 'gauge',
-        min: 0,
-        max: 1000,
-        detail: {
-          formatter: cache.value.info.used_memory_human
-        },
-        data: [
-          {
-            value: parseFloat(cache.value.info.used_memory_human),
-            name: '内存消耗'
+    filters: {},
+    created () {
+      this.getList('0')
+    },
+    mounted () {
+      window.addEventListener('resize', () => {
+        this.commandstats.resize()
+        this.usedmemory.resize()
+      })
+    },
+    computed: {},
+    watch: {},
+    methods: {
+      /** 查询服务信息 */
+      getList (type) {
+        if (type === '0') {
+          this.loading = true
+        }
+        getCache().then(response => {
+          const cache = response.data
+          this.cache = cache
+          if (type === '0') {
+            this.loading = false
           }
-        ]
-      }
-    ]
-  });
-  window.addEventListener('resize', () => {
-    commandstatsIntance.resize();
-    usedmemoryInstance.resize();
-  });
-};
+          this.$nextTick(() => {
+           const commandStats = response.data.commandStats
+            const names = []
+            const values = []
+            commandStats.forEach(item => names.push(item.name))
+            commandStats.forEach(item => values.push(item.value))
+            this.commandstats = echarts.init(this.$refs.commandstats, 'macarons')
+            this.commandstats.setOption({
+              title: {
+                textStyle: {
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: '#333' // 主标题文字颜色
+                },
+                left: 8,
+                top: 8
+              },
 
-onMounted(() => {
-  getList();
-});
+              tooltip: {
+                trigger: 'axis'
+              },
+              grid: {
+                left: '2%',
+                right: '2%',
+                bottom: '2%',
+                top: '8%',
+                containLabel: true
+              },
+              xAxis: [{
+                type: 'category',
+                 data: names,
+                axisTick: {
+                  alignWithLabel: true
+                },
+                axisLabel: {
+                  // 坐标轴文本标签，详见axis.axisLabel
+                  show: true,
+                  rotate: 0,
+                  margin: 8,
+                  textStyle: {
+                    color: '#666',
+                    fontSize: '14'
+                  }
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: '#dfe6ff',
+                    width: 1
+
+                  }
+                }
+              }],
+              yAxis: [{
+                type: 'value'
+              }],
+              series: [{
+                name: '使用次数',
+                type: 'bar',
+                barWidth: '20%',
+                itemStyle: {
+                  barBorderRadius: [4, 4, 0, 0],
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                      offset: 0,
+                      color: '#2881e6'
+                    },
+                    {
+                      offset: 0.5,
+                      color: '#308bf2'
+                    },
+                    {
+                      offset: 1,
+                      color: '#3693fb'
+                    }
+                  ])
+                },
+                data: values
+              }]
+            })
+            this.usedmemory = echarts.init(this.$refs.usedmemory, 'macarons')
+            this.usedmemory.setOption({
+              tooltip: {
+                formatter: '{b} <br/>{a} : ' + this.cache.info.used_memory_human
+              },
+              series: [{
+                name: '峰值',
+                type: 'gauge',
+                progress: {
+                  show: true,
+                  width: 14
+                },
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#2881e6'
+                  },
+                  {
+                    offset: 0.5,
+                    color: '#308bf2'
+                  },
+                  {
+                    offset: 1,
+                    color: '#3693fb'
+                  }
+                ]),
+                axisLine: {
+                  lineStyle: {
+                    width: 14
+                  }
+                },
+                axisTick: {
+                  show: false
+                },
+                splitLine: {
+                  length: 4,
+                  lineStyle: {
+                    width: 2,
+                    color: '#999'
+                  }
+                },
+                anchor: {
+                  show: true,
+                  showAbove: true,
+                  size: 20,
+                  itemStyle: {
+                    borderWidth: 4,
+                    borderColor: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#2881e6'
+                      },
+                      {
+                        offset: 0.5,
+                        color: '#308bf2'
+                      },
+                      {
+                        offset: 1,
+                        color: '#3693fb'
+                      }
+                    ])
+                  }
+                },
+                axisLabel: {
+                  distance: 25,
+                  color: '#999',
+                  fontSize: 14
+                },
+                radius: '90%',
+                center: ['50%', '56%'],
+                min: 0,
+                max: 1000,
+                detail: {
+                  fontSize: 24,
+                  valueAnimation: true,
+                  formatter: this.cache.info.used_memory_human
+                },
+                data: [{
+                  value: parseFloat(this.cache.info.used_memory_human),
+                  name: '内存消耗'
+                }]
+              }]
+            })
+          })
+        })
+      }
+    }
+  }
 </script>
+<style>
+  .commandstats_bg {
+    height: 160px;
+    width: 160px;
+    position: absolute;
+    left: calc(50% - 80px);
+    top: calc(50% - 70px);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 20px rgb(40 57 123 / 12%);
+    z-index: 0;
+  }
+
+  .ant-descriptions-item-label {
+    color: #888;
+  }
+
+  .ant-descriptions-item-content {
+    color: #222;
+    font-weight: 600;
+  }
+
+  .ant-descriptions-row>th,
+  .ant-descriptions-row>td {
+    padding-left: 24px;
+  }
+</style>
